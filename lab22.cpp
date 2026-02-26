@@ -29,6 +29,44 @@ ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 }
 
 //Write your code here
+ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
+    return ComplexNumber(real * c.real - imag * c.imag, real * c.imag + imag * c.real);
+}
+
+ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
+    double den = c.real * c.real + c.imag * c.imag;
+    return ComplexNumber((real * c.real + imag * c.imag) / den, (imag * c.real - real * c.imag) / den);
+}
+
+bool ComplexNumber::operator==(const ComplexNumber &c){
+    return (real == c.real && imag == c.imag);
+}
+
+double ComplexNumber::abs(){
+    return sqrt(real * real + imag * imag);
+}
+
+double ComplexNumber::angle(){
+    return atan2(imag, real) * 180 / M_PI;
+}
+
+ComplexNumber operator+(double s, const ComplexNumber &c){ return ComplexNumber(s + c.real, c.imag); }
+ComplexNumber operator-(double s, const ComplexNumber &c){ return ComplexNumber(s - c.real, -c.imag); }
+ComplexNumber operator*(double s, const ComplexNumber &c){ return ComplexNumber(s * c.real, s * c.imag); }
+ComplexNumber operator/(double s, const ComplexNumber &c){
+    double den = c.real * c.real + c.imag * c.imag;
+    return ComplexNumber((s * c.real) / den, (-s * c.imag) / den);
+}
+
+bool operator==(double s, const ComplexNumber &c){ return (s == c.real && c.imag == 0); }
+
+ostream& operator<<(ostream &os, const ComplexNumber &c){
+    if(c.real == 0 && c.imag == 0) return os << "0";
+    if(c.real == 0) return os << c.imag << "i";
+    if(c.imag == 0) return os << c.real;
+    if(c.imag > 0) return os << c.real << "+" << c.imag << "i";
+    return os << c.real << c.imag << "i";
+}
 
 int main(){
 	ComplexNumber a(1.5,2),b(3.2,-2.5),c(-1,1.2);	
